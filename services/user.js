@@ -22,6 +22,22 @@ const createUser = async (newUser) => {
   };
 };
 
+const login = async (email, password) => {
+  const user = await User.findOne({
+    where: {
+      email,
+      password,
+    },
+  });
+
+  if (!user) return { code: 400, message: 'Invalid fields' };
+
+  const acessToken = token(email, password);
+  
+  return acessToken;
+};
+
 module.exports = {
   createUser,
+  login,
 };

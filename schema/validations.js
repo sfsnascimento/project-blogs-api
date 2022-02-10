@@ -10,12 +10,15 @@ const error = {
   emptyEmail: '"email" is required',
   emptyPassword: '"password" is required',
   passwordLength: '"password" length must be 6 characters long',
+  blankEmail: '"email" is not allowed to be empty',
+  blankPassword: '"password" is not allowed to be empty',
 };
 
 const displayNameLength = (value, min) => (value.length < min);
 const testEmail = (value) => (!(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)));
 const empty = (value) => (!value);
 const passwordLength = (value) => (value.length !== 6);
+const blank = (value) => (value === '');
 
 const validateUser = (displayName) => {
   switch (true) {
@@ -28,6 +31,7 @@ const validateUser = (displayName) => {
 
 const validateEmail = (email) => {
   switch (true) {
+    case blank(email): return { code: code.BAD_REQUEST, message: error.blankEmail };
     case empty(email): return { code: code.BAD_REQUEST, message: error.emptyEmail };
     case testEmail(email): return { code: code.BAD_REQUEST, message: error.emailIsValid };
     default: return {};
@@ -36,6 +40,7 @@ const validateEmail = (email) => {
 
 const validatePassword = (password) => {
   switch (true) {
+    case blank(password): return { code: code.BAD_REQUEST, message: error.blankPassword };
     case empty(password): return { code: code.BAD_REQUEST, message: error.emptyPassword };
     case passwordLength(password): return { 
       code: code.BAD_REQUEST, message: error.passwordLength,

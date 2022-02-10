@@ -3,6 +3,7 @@ const {
   validateEmail,
   validatePassword,
   validateName,
+  validatePost,
 } = require('../schema/validations');
 
 const validations = (req, res, next) => {
@@ -46,7 +47,6 @@ const loginValidations = (req, res, next) => {
 
 const nameValidations = (req, res, next) => {
   const { name } = req.body;
-  console.log('name', name);
 
   const nameValidation = validateName(name);
 
@@ -57,8 +57,21 @@ const nameValidations = (req, res, next) => {
   next();
 };
 
+const postValidations = (req, res, next) => {
+  const post = req.body;
+
+  const postValidation = validatePost(post);
+
+  if (postValidation.message) {
+    return res.status(postValidation.code).json({ message: postValidation.message });
+  }
+
+  next();
+};
+
 module.exports = {
   validations,
   loginValidations,
   nameValidations,
+  postValidations,
 };

@@ -1,4 +1,5 @@
-const { User, Category } = require('../models');
+const jwt = require('jsonwebtoken');
+const { User, Category, BlogPost } = require('../models');
 const token = require('../schema/token');
 
 const createUser = async (newUser) => {
@@ -68,6 +69,29 @@ const getAllCategories = async () => {
   return allCategories;
 };
 
+const createPost = async ({ title, content, categoryIds }, authorization) => {
+  const exist = await Category.findOne({
+    where: {
+      id: categoryIds,
+    },
+  });
+
+  if (!exist) return { code: 400, message: '"categoryIds" not found' };
+
+  const { email } = jwt.decode(authorization, process.env.SECRET);
+
+  const { id } = await User.findOne({
+    where: {
+      email,
+    },
+  });
+
+  const { dataValues } = await BlogPost
+    .create({ userId: id, title, content, published: new Date(), updated: new Date() });
+
+  return dataValues;
+};
+
 module.exports = {
   createUser,
   login,
@@ -75,4 +99,5 @@ module.exports = {
   getUserById,
   createCategory,
   getAllCategories,
+  createPost,
 };

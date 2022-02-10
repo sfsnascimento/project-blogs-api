@@ -5,7 +5,7 @@ const createUser = async (req, res) => {
 
   const acessToken = await user.createUser(newUser);
 
-  if (acessToken.message) res.status(acessToken.code).json({ message: acessToken.message }); 
+  if (acessToken.message) return res.status(acessToken.code).json({ message: acessToken.message }); 
 
   res.status(201).json({ token: acessToken });
 };
@@ -15,7 +15,7 @@ const login = async (req, res) => {
 
   const acessToken = await user.login(email, password);
 
-  if (acessToken.message) res.status(acessToken.code).json({ message: acessToken.message });
+  if (acessToken.message) return res.status(acessToken.code).json({ message: acessToken.message });
 
   res.json({ token: acessToken });
 };
@@ -31,7 +31,7 @@ const getUserById = async (req, res) => {
 
   const userById = await user.getUserById(id);
 
-  if (userById.message) res.status(userById.code).json({ message: userById.message });
+  if (userById.message) return res.status(userById.code).json({ message: userById.message });
 
   res.status(200).json(userById);
 };
@@ -50,6 +50,17 @@ const getAllCategories = async (_req, res) => {
   res.status(200).json(allCategories);
 };
 
+const createPost = async (req, res) => {
+  const { authorization } = req.headers;
+  const postInfo = req.body;
+
+  const dataValues = await user.createPost(postInfo, authorization);
+
+  if (dataValues.message) return res.status(dataValues.code).json({ message: dataValues.message });
+
+  res.status(201).json(dataValues);
+};
+
 module.exports = {
   createUser,
   login,
@@ -57,4 +68,5 @@ module.exports = {
   getUserById,
   createCategory,
   getAllCategories,
+  createPost,
 };

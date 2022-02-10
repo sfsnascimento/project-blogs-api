@@ -10,12 +10,14 @@ const {
   getUserById,
   createCategory,
   getAllCategories,
+  createPost,
 } = require('./controllers/user');
 
 const {
   validations,
   loginValidations,
   nameValidations,
+  postValidations,
 } = require('./middlewares/validations');
 
 const app = express();
@@ -37,3 +39,4 @@ app.get('/user', getAllUsers);
 app.get('/user/:id', getUserById);
 app.post('/categories', nameValidations, createCategory);
 app.get('/categories', getAllCategories);
+app.post('/post', postValidations, createPost);

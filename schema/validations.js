@@ -13,6 +13,9 @@ const error = {
   blankEmail: '"email" is not allowed to be empty',
   blankPassword: '"password" is not allowed to be empty',
   nameIsValid: '"name" is required',
+  emptyTitle: '"title" is required',
+  emptyContent: '"content" is required',
+  emptyCategoryIds: '"categoryIds" is required',
 };
 
 const displayNameLength = (value, min) => (value.length < min);
@@ -58,9 +61,19 @@ const validateName = (name) => {
   }
 };
 
+const validatePost = ({ title, content, categoryIds }) => {
+  switch (true) {
+    case empty(title): return { code: code.BAD_REQUEST, message: error.emptyTitle };
+    case empty(content): return { code: code.BAD_REQUEST, message: error.emptyContent };
+    case empty(categoryIds): return { code: code.BAD_REQUEST, message: error.emptyCategoryIds };
+    default: return {};
+  }
+};
+
 module.exports = {
   validateUser,
   validateEmail,
   validatePassword,
   validateName,
+  validatePost,
 };

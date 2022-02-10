@@ -20,7 +20,7 @@ const login = async (req, res) => {
   res.json({ token: acessToken });
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (_req, res) => {
   const users = await user.getAllUsers();
 
   res.status(200).json(users);
@@ -44,10 +44,17 @@ const createCategory = async (req, res) => {
   res.status(201).json(create);
 };
 
+const getAllCategories = async (_req, res) => {
+  const allCategories = await user.getAllCategories();
+
+  res.status(200).json(allCategories);
+};
+
 module.exports = {
   createUser,
   login,
   getAllUsers,
   getUserById,
   createCategory,
+  getAllCategories,
 };

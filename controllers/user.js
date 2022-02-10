@@ -36,9 +36,18 @@ const getUserById = async (req, res) => {
   res.status(200).json(userById);
 };
 
+const createCategory = async (req, res) => {
+  const { name } = req.body;
+
+  const create = await user.createCategory(name);
+
+  res.status(201).json(create);
+};
+
 module.exports = {
   createUser,
   login,
   getAllUsers,
   getUserById,
+  createCategory,
 };

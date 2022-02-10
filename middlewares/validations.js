@@ -1,4 +1,9 @@
-const { validateUser, validateEmail, validatePassword } = require('../schema/validations');
+const {
+  validateUser,
+  validateEmail,
+  validatePassword,
+  validateName,
+} = require('../schema/validations');
 
 const validations = (req, res, next) => {
   const { displayName, email, password } = req.body;
@@ -39,7 +44,21 @@ const loginValidations = (req, res, next) => {
   next();
 };
 
+const nameValidations = (req, res, next) => {
+  const { name } = req.body;
+  console.log('name', name);
+
+  const nameValidation = validateName(name);
+
+  if (nameValidation.message) {
+    return res.status(nameValidation.code).json({ message: nameValidation.message });
+  }
+
+  next();
+};
+
 module.exports = {
   validations,
   loginValidations,
+  nameValidations,
 };

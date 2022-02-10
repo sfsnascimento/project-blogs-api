@@ -12,6 +12,7 @@ const error = {
   passwordLength: '"password" length must be 6 characters long',
   blankEmail: '"email" is not allowed to be empty',
   blankPassword: '"password" is not allowed to be empty',
+  nameIsValid: '"name" is required',
 };
 
 const displayNameLength = (value, min) => (value.length < min);
@@ -19,6 +20,7 @@ const testEmail = (value) => (!(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test
 const empty = (value) => (!value);
 const passwordLength = (value) => (value.length !== 6);
 const blank = (value) => (value === '');
+const emptyName = (value) => (value === undefined);
 
 const validateUser = (displayName) => {
   switch (true) {
@@ -49,8 +51,16 @@ const validatePassword = (password) => {
   }
 };
 
+const validateName = (name) => {
+  switch (true) {
+    case emptyName(name): return { code: code.BAD_REQUEST, message: error.nameIsValid };
+    default: return {};
+  }
+};
+
 module.exports = {
   validateUser,
   validateEmail,
   validatePassword,
+  validateName,
 };

@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Category } = require('../models');
 const token = require('../schema/token');
 
 const createUser = async (newUser) => {
@@ -50,10 +50,16 @@ const getAllUsers = async () => {
 
 const getUserById = async (id) => {
   const userById = await User.findByPk(id);
-  
+
   if (!userById) return { code: 404, message: 'User does not exist' };
 
   return userById.dataValues;
+};
+
+const createCategory = async (name) => {
+  const create = await Category.create({ name });
+
+  return create;
 };
 
 module.exports = {
@@ -61,4 +67,5 @@ module.exports = {
   login,
   getAllUsers,
   getUserById,
+  createCategory,
 };

@@ -23,6 +23,11 @@ const createUser = async (newUser) => {
 };
 
 const login = async (email, password) => {
+  const payload = {
+    email,
+    password,
+  };
+
   const user = await User.findOne({
     where: {
       email,
@@ -32,12 +37,19 @@ const login = async (email, password) => {
 
   if (!user) return { code: 400, message: 'Invalid fields' };
 
-  const acessToken = token(email, password);
+  const acessToken = token(payload);
   
   return acessToken;
+};
+
+const getAllUsers = async () => {
+  const users = await User.findAll();
+
+  return users;
 };
 
 module.exports = {
   createUser,
   login,
+  getAllUsers,
 };

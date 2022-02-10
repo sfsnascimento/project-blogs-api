@@ -7,6 +7,7 @@ const {
   createUser,
   login,
   getAllUsers,
+  getUserById,
 } = require('./controllers/user');
 
 const {
@@ -28,5 +29,6 @@ app.post('/login', loginValidations, login);
 
 app.use(authorization);
 app.get('/user', getAllUsers);
+app.get('/user/:id', getUserById);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));

@@ -100,6 +100,14 @@ const deletePost = async (req, res) => {
   res.status(204).json({});
 };
 
+const deleteUser = async (req, res) => {
+  const { authorization } = req.headers;
+
+  await user.deleteUser(authorization);
+
+  res.status(204).json({});
+};
+
 module.exports = {
   createUser,
   login,
@@ -112,4 +120,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  deleteUser,
 };

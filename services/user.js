@@ -149,6 +149,14 @@ const deletePost = async (id, authorization) => {
   return 'deleted';
 };
 
+const deleteUser = async (authorization) => {
+  const { email } = jwt.decode(authorization, process.env.SECRET);
+
+  await User.destroy({ where: { email } });
+  
+  return 'deleted';
+};
+
 module.exports = {
   createUser,
   login,
@@ -161,4 +169,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  deleteUser,
 };

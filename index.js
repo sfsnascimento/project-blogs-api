@@ -11,6 +11,7 @@ const {
   createCategory,
   getAllCategories,
   createPost,
+  getAllPosts,
 } = require('./controllers/user');
 
 const {
@@ -40,3 +41,4 @@ app.get('/user/:id', getUserById);
 app.post('/categories', nameValidations, createCategory);
 app.get('/categories', getAllCategories);
 app.post('/post', postValidations, createPost);
+app.get('/post', getAllPosts);

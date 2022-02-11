@@ -61,6 +61,12 @@ const createPost = async (req, res) => {
   res.status(201).json(dataValues);
 };
 
+const getAllPosts = async (_req, res) => {
+  const posts = await user.getAllPosts();
+
+  res.status(200).json(posts);
+};
+
 module.exports = {
   createUser,
   login,
@@ -69,4 +75,5 @@ module.exports = {
   createCategory,
   getAllCategories,
   createPost,
+  getAllPosts,
 };

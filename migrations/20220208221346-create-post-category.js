@@ -4,6 +4,8 @@ module.exports = {
       postId: {
         type: Sequelize.INTEGER,
         pimaryKey: true,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: 'BlogPosts',
           key: 'id'
@@ -12,6 +14,8 @@ module.exports = {
       categoryId: {
         type: Sequelize.INTEGER,
         pimaryKey: true,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: 'Categories',
           key: 'id'

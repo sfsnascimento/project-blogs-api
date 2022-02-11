@@ -14,6 +14,7 @@ const {
   getAllPosts,
   getPostById,
   updatePost,
+  deletePost,
 } = require('./controllers/user');
 
 const {
@@ -50,3 +51,4 @@ app.post('/post', postValidations, createPost);
 app.get('/post', getAllPosts);
 app.get('/post/:id', getPostById);
 app.put('/post/:id', postIdValidations, updatePost);
+app.delete('/post/:id', deletePost);

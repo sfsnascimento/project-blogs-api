@@ -134,6 +134,21 @@ const updatePost = async (id, post, authorization) => {
   return postById;
 };
 
+const deletePost = async (id, authorization) => {
+  const { email } = jwt.decode(authorization, process.env.SECRET);
+  const user = await User.findOne({ where: { email } });
+
+  const post = await BlogPost.findByPk(id);
+  
+  if (!post) return { code: 404, message: 'Post does not exist' };
+
+  if (post.userId !== user.dataValues.id) return { code: 401, message: 'Unauthorized user' };
+
+  await BlogPost.destroy({ where: { id } });
+
+  return 'deleted';
+};
+
 module.exports = {
   createUser,
   login,
@@ -145,4 +160,5 @@ module.exports = {
   getAllPosts,
   getPostById,
   updatePost,
+  deletePost,
 };

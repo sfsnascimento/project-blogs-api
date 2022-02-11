@@ -7,7 +7,7 @@ const createUser = async (req, res) => {
 
   if (acessToken.message) return res.status(acessToken.code).json({ message: acessToken.message }); 
 
-  return res.status(201).json({ token: acessToken });
+  res.status(201).json({ token: acessToken });
 };
 
 const login = async (req, res) => {
@@ -17,13 +17,13 @@ const login = async (req, res) => {
 
   if (acessToken.message) return res.status(acessToken.code).json({ message: acessToken.message });
 
-  return res.json({ token: acessToken });
+  res.json({ token: acessToken });
 };
 
 const getAllUsers = async (_req, res) => {
   const users = await user.getAllUsers();
 
-  return res.status(200).json(users);
+  res.status(200).json(users);
 };
 
 const getUserById = async (req, res) => {
@@ -33,7 +33,7 @@ const getUserById = async (req, res) => {
 
   if (userById.message) return res.status(userById.code).json({ message: userById.message });
 
-  return res.status(200).json(userById);
+  res.status(200).json(userById);
 };
 
 const createCategory = async (req, res) => {
@@ -41,13 +41,13 @@ const createCategory = async (req, res) => {
 
   const create = await user.createCategory(name);
 
-  return res.status(201).json(create);
+  res.status(201).json(create);
 };
 
 const getAllCategories = async (_req, res) => {
   const allCategories = await user.getAllCategories();
 
-  return res.status(200).json(allCategories);
+  res.status(200).json(allCategories);
 };
 
 const createPost = async (req, res) => {
@@ -58,7 +58,7 @@ const createPost = async (req, res) => {
 
   if (dataValues.message) return res.status(dataValues.code).json({ message: dataValues.message });
 
-  return res.status(201).json(dataValues);
+  res.status(201).json(dataValues);
 };
 
 const getAllPosts = async (_req, res) => {
@@ -74,7 +74,7 @@ const getPostById = async (req, res) => {
   
   if (postById.message) return res.status(postById.code).json({ message: postById.message });
 
-  return res.status(200).json(postById);
+  res.status(200).json(postById);
 };
 
 const updatePost = async (req, res) => {
@@ -86,7 +86,18 @@ const updatePost = async (req, res) => {
 
   if (updated.message) return res.status(updated.code).json({ message: updated.message });
 
-  return res.status(200).json(updated);
+  res.status(200).json(updated);
+};
+
+const deletePost = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+
+  const deleted = await user.deletePost(id, authorization);
+
+  if (deleted.message) return res.status(deleted.code).json({ message: deleted.message });
+
+  res.status(204).json({});
 };
 
 module.exports = {
@@ -100,4 +111,5 @@ module.exports = {
   getAllPosts,
   getPostById,
   updatePost,
+  deletePost,
 };

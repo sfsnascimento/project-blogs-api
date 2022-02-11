@@ -4,6 +4,7 @@ const {
   validatePassword,
   validateName,
   validatePost,
+  validatePostId,
 } = require('../schema/validations');
 
 const validations = (req, res, next) => {
@@ -69,9 +70,22 @@ const postValidations = (req, res, next) => {
   next();
 };
 
+const postIdValidations = (req, res, next) => {
+  const post = req.body;
+
+  const postIdValidation = validatePostId(post);
+
+  if (postIdValidation.message) {
+    return res.status(postIdValidation.code).json({ message: postIdValidation.message });
+  }
+
+  next();
+};
+
 module.exports = {
   validations,
   loginValidations,
   nameValidations,
   postValidations,
+  postIdValidations,
 };

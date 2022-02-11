@@ -13,6 +13,7 @@ const {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 } = require('./controllers/user');
 
 const {
@@ -20,6 +21,7 @@ const {
   loginValidations,
   nameValidations,
   postValidations,
+  postIdValidations,
 } = require('./middlewares/validations');
 
 const app = express();
@@ -37,10 +39,14 @@ app.post('/user', validations, createUser);
 app.post('/login', loginValidations, login);
 
 app.use(authorization);
+
 app.get('/user', getAllUsers);
 app.get('/user/:id', getUserById);
+
 app.post('/categories', nameValidations, createCategory);
 app.get('/categories', getAllCategories);
+
 app.post('/post', postValidations, createPost);
 app.get('/post', getAllPosts);
 app.get('/post/:id', getPostById);
+app.put('/post/:id', postIdValidations, updatePost);

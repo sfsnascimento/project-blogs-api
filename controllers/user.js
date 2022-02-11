@@ -7,7 +7,7 @@ const createUser = async (req, res) => {
 
   if (acessToken.message) return res.status(acessToken.code).json({ message: acessToken.message }); 
 
-  res.status(201).json({ token: acessToken });
+  return res.status(201).json({ token: acessToken });
 };
 
 const login = async (req, res) => {
@@ -17,13 +17,13 @@ const login = async (req, res) => {
 
   if (acessToken.message) return res.status(acessToken.code).json({ message: acessToken.message });
 
-  res.json({ token: acessToken });
+  return res.json({ token: acessToken });
 };
 
 const getAllUsers = async (_req, res) => {
   const users = await user.getAllUsers();
 
-  res.status(200).json(users);
+  return res.status(200).json(users);
 };
 
 const getUserById = async (req, res) => {
@@ -33,7 +33,7 @@ const getUserById = async (req, res) => {
 
   if (userById.message) return res.status(userById.code).json({ message: userById.message });
 
-  res.status(200).json(userById);
+  return res.status(200).json(userById);
 };
 
 const createCategory = async (req, res) => {
@@ -41,13 +41,13 @@ const createCategory = async (req, res) => {
 
   const create = await user.createCategory(name);
 
-  res.status(201).json(create);
+  return res.status(201).json(create);
 };
 
 const getAllCategories = async (_req, res) => {
   const allCategories = await user.getAllCategories();
 
-  res.status(200).json(allCategories);
+  return res.status(200).json(allCategories);
 };
 
 const createPost = async (req, res) => {
@@ -58,13 +58,13 @@ const createPost = async (req, res) => {
 
   if (dataValues.message) return res.status(dataValues.code).json({ message: dataValues.message });
 
-  res.status(201).json(dataValues);
+  return res.status(201).json(dataValues);
 };
 
 const getAllPosts = async (_req, res) => {
   const posts = await user.getAllPosts();
 
-  res.status(200).json(posts);
+  return res.status(200).json(posts);
 };
 
 const getPostById = async (req, res) => {
@@ -74,7 +74,19 @@ const getPostById = async (req, res) => {
   
   if (postById.message) return res.status(postById.code).json({ message: postById.message });
 
-  res.status(200).json(postById);
+  return res.status(200).json(postById);
+};
+
+const updatePost = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+  const post = req.body;
+
+  const updated = await user.updatePost(id, post, authorization);
+
+  if (updated.message) return res.status(updated.code).json({ message: updated.message });
+
+  return res.status(200).json(updated);
 };
 
 module.exports = {
@@ -87,4 +99,5 @@ module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };

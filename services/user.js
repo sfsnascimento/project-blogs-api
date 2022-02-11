@@ -114,6 +114,26 @@ const getPostById = async (id) => {
   return postById;
 };
 
+const updatePost = async (id, post, authorization) => {
+  const { email } = jwt.decode(authorization, process.env.SECRET);
+  const user = await User.findOne({ where: { email } });
+
+  const { userId } = await BlogPost.findByPk(id);
+
+  if (userId !== user.dataValues.id) return { code: 401, message: 'Unauthorized user' };
+  
+  if (post.categoryIds) return { code: 400, message: 'Categories cannot be edited' };
+  
+  await BlogPost.update({ title: post.title, content: post.content }, { where: { id } });
+  
+  const postById = await BlogPost.findByPk(id, {
+    attributes: { exclude: ['id', 'published', 'updated'] },
+    include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+
+  return postById;
+};
+
 module.exports = {
   createUser,
   login,
@@ -124,4 +144,5 @@ module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };

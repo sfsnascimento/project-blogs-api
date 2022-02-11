@@ -70,10 +70,19 @@ const validatePost = ({ title, content, categoryIds }) => {
   }
 };
 
+const validatePostId = ({ title, content }) => {
+  switch (true) {
+    case empty(title): return { code: code.BAD_REQUEST, message: error.emptyTitle };
+    case empty(content): return { code: code.BAD_REQUEST, message: error.emptyContent };
+    default: return {};
+  }
+};
+
 module.exports = {
   validateUser,
   validateEmail,
   validatePassword,
   validateName,
   validatePost,
+  validatePostId,
 };

@@ -67,6 +67,16 @@ const getAllPosts = async (_req, res) => {
   res.status(200).json(posts);
 };
 
+const getPostById = async (req, res) => {
+  const { id } = req.params;
+
+  const postById = await user.getPostById(id);
+  
+  if (postById.message) return res.status(postById.code).json({ message: postById.message });
+
+  res.status(200).json(postById);
+};
+
 module.exports = {
   createUser,
   login,
@@ -76,4 +86,5 @@ module.exports = {
   getAllCategories,
   createPost,
   getAllPosts,
+  getPostById,
 };

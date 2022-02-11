@@ -12,6 +12,7 @@ const {
   getAllCategories,
   createPost,
   getAllPosts,
+  getPostById,
 } = require('./controllers/user');
 
 const {
@@ -42,3 +43,4 @@ app.post('/categories', nameValidations, createCategory);
 app.get('/categories', getAllCategories);
 app.post('/post', postValidations, createPost);
 app.get('/post', getAllPosts);
+app.get('/post/:id', getPostById);

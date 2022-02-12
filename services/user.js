@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 const { User, Category, BlogPost } = require('../models');
 const token = require('../schema/token');
 
@@ -44,7 +45,9 @@ const login = async (email, password) => {
 };
 
 const getAllUsers = async () => {
-  const users = await User.findAll();
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
 
   return users;
 };
@@ -95,10 +98,10 @@ const createPost = async ({ title, content, categoryIds }, authorization) => {
 const getAllPosts = async () => {
   const posts = await BlogPost.findAll({
     include: [
-      { model: User, as: 'user' },
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } }],
   });
-
+ 
   return posts;
 };
 
@@ -157,6 +160,29 @@ const deleteUser = async (authorization) => {
   return 'deleted';
 };
 
+const getBySearch = async (q) => {
+  if (!q) {
+    const searchAll = await BlogPost.findAll({
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+
+    return searchAll;
+  }
+
+  const search = await BlogPost.findAll({
+    where: { [Op.or]: [{ title: q }, { content: q }] },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  
+  return search;
+};
+
 module.exports = {
   createUser,
   login,
@@ -170,4 +196,5 @@ module.exports = {
   updatePost,
   deletePost,
   deleteUser,
+  getBySearch,
 };

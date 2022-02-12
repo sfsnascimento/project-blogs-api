@@ -16,6 +16,7 @@ const {
   updatePost,
   deletePost,
   deleteUser,
+  getBySearch,
 } = require('./controllers/user');
 
 const {
@@ -50,6 +51,7 @@ app.get('/categories', getAllCategories);
 
 app.post('/post', postValidations, createPost);
 app.get('/post', getAllPosts);
+app.get('/post/search', getBySearch);
 app.get('/post/:id', getPostById);
 app.put('/post/:id', postIdValidations, updatePost);
 app.delete('/post/:id', deletePost);

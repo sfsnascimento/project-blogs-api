@@ -64,7 +64,7 @@ const createPost = async (req, res) => {
 const getAllPosts = async (_req, res) => {
   const posts = await user.getAllPosts();
 
-  return res.status(200).json(posts);
+  res.status(200).json(posts);
 };
 
 const getPostById = async (req, res) => {
@@ -108,6 +108,14 @@ const deleteUser = async (req, res) => {
   res.status(204).json({});
 };
 
+const getBySearch = async (req, res) => {
+  const { q } = req.query;
+
+  const search = await user.getBySearch(q);
+
+  res.status(200).json(search);
+};
+
 module.exports = {
   createUser,
   login,
@@ -121,4 +129,5 @@ module.exports = {
   updatePost,
   deletePost,
   deleteUser,
+  getBySearch,
 };

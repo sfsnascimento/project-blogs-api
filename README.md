@@ -3,7 +3,7 @@ Desenvolver uma aplicação em `Node.js` usando o pacote `sequelize` para fazer 
 ### Instruções para rodar o projeto:
 
 1. Clone o repositório
-  * `git clone https://github.com/tryber/sd-014-a-project-blogs-api.git`.
+  * `git clone git@github.com:sfsnascimento/project-blogs-api.git`.
   * Entre na pasta do repositório que você acabou de clonar:
     * `cd sd-014-a-project-blogs-api`
 

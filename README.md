@@ -1,4 +1,7 @@
-Foi desenvolvido uma aplicação em `Node.js` usando o pacote `sequelize` para fazer um `CRUD` de posts. Utilizando o mysql como banco de dados.
+# Projeto realizado durante curso na Trybe - Módulo de Back-end
+
+## O que foi desenvolvido
+Uma aplicação em `Node.js` usando o pacote `sequelize` para fazer um `CRUD` de posts. Utilizando o mysql como banco de dados.
 
 ### Instruções para rodar o projeto:
 
